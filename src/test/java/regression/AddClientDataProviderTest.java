@@ -1,17 +1,20 @@
 package regression;
 
-import com.beust.ah.A;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.AddClient;
 import pages.Login;
 import pages.Menu;
 
+import java.io.IOException;
 import java.text.ParseException;
 
-public class AddClientTest {
+import static DataProvider.util.GetData.getMyData;
+
+public class AddClientDataProviderTest {
     WebDriver driver;
     @BeforeClass
     public void doLogin()
@@ -24,19 +27,13 @@ public class AddClientTest {
         login.doLogin("amolujagare@gmail.com","admin123");
     }
 
-    @Test
+    @Test(dataProvider = "getData")
     public void adddClientTest() throws ParseException {
         Menu menu = new Menu(driver);
         menu.clickAddClient();
 
         AddClient addClient = new AddClient(driver);
 
-     /*   addClient.setLanguage("English");
-        addClient.setCountry("India");
-        addClient.setGender("Female");*/
-
-       // addClient.setDate("05/11/1985");
-     //  addClient.setDate1("05/11/2018");
 
         addClient.setClientName("John1");
         addClient.setClientSurname("Doe");
@@ -52,8 +49,14 @@ public class AddClientTest {
         addClient.setClientFax("555-987-6543");
         addClient.setClientMobile("555-555-5555");
         addClient.setClientEmail("john.doe@example.com");
+        addClient.setWebAddress("example.com");
         addClient.setClientVatId("ABC123");
         addClient.setClientTaxCode("XYZ789");
         addClient.clickSave();
+    }
+
+    @DataProvider
+    Object[][] getData() throws IOException {
+        return getMyData("Data/Data.xlsx","Sheet1");
     }
 }

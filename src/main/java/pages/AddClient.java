@@ -1,10 +1,17 @@
 package pages;
 
+import org.joda.time.DateTime;
+import org.joda.time.Months;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class AddClient {
     @FindBy(xpath = "//input[@id='client_name']")
@@ -75,6 +82,51 @@ public class AddClient {
         driver.findElement(By.xpath("//li[normalize-space()='"+gender+"']")).click();
     }
 
+    @FindBy(xpath="//input[@id='client_birthdate']")
+    WebElement birthdate;
+
+    public void setDate1(String setDateStr) throws ParseException {
+       // birthdate.sendKeys(setDateStr);
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].setAttribute('value','"+setDateStr+"')",birthdate);
+
+    }
+    public void setDate(String setDateStr) throws ParseException {
+        birthdate.click();
+
+        Date setDate = new SimpleDateFormat("dd/MM/yyyy").parse(setDateStr);
+
+        String currDateStr = driver.findElement(By.xpath("//th[@class='datepicker-switch']")).getText();
+        Date currDate = new SimpleDateFormat("MMMM yyyy").parse(currDateStr);
+
+        int monthDiff = Months.monthsBetween(new DateTime(currDate).withDayOfMonth(1)
+                ,new DateTime(setDate).withDayOfMonth(1)).getMonths();
+        System.out.println("monthDiff="+monthDiff);
+
+        boolean flag = true;
+        if(monthDiff<0)
+        {
+            flag = false;
+            monthDiff = monthDiff * (-1);
+        }
+
+        for (int i=0;i<monthDiff;i++)
+        {
+            if (flag)
+                driver.findElement(By.xpath("//th[@class='next']")).click();
+            else
+                driver.findElement(By.xpath("//th[@class='prev']")).click();
+        }
+
+        String dayStr = new SimpleDateFormat("dd").format(setDate);
+
+        System.out.println("dayStr="+dayStr);
+        int day = Integer.parseInt(dayStr);
+        System.out.println("day="+day);
+        driver.findElement(By.xpath("//td[@class='day'][normalize-space()='"+day+"']")).click();
+    }
+
     public void setClientName(String name)
     {
         clientName.sendKeys(name);
@@ -135,4 +187,10 @@ public class AddClient {
         this.driver = driver;
         PageFactory.initElements(driver,this);
     }
+    @FindBy(xpath="//input[@id='client_web']")
+    WebElement webAddress;
+    public void setWebAddress(String web) {
+       webAddress.sendKeys(web);
+    }
+
 }

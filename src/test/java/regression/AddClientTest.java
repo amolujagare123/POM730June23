@@ -48,6 +48,7 @@ public class AddClientTest {
         addClient.setClientZip("12345");
         addClient.setCountry("India");
         addClient.setGender("Female");
+        addClient.setDate1("05/11/2018");
         addClient.setClientPhone("555-123-4567");
         addClient.setClientFax("555-987-6543");
         addClient.setClientMobile("555-555-5555");

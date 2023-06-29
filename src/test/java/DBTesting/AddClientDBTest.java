@@ -17,6 +17,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 
 import static DataProvider.util.GetData.getMyData;
+import static util.Conversion.*;
 
 public class AddClientDBTest {
     WebDriver driver;
@@ -103,9 +104,19 @@ public class AddClientDBTest {
             actual.add(rs.getString("client_city"));
             actual.add(rs.getString("client_state"));
             actual.add(rs.getString("client_zip"));
-            actual.add(rs.getString("client_country"));
-            actual.add(rs.getString("client_gender"));
-            actual.add(rs.getString("client_birthdate"));
+
+            String shortCountry = rs.getString("client_country");
+            String fullCountry = convertCountry(shortCountry);
+            actual.add(fullCountry);
+
+          //  actual.add(rs.getString("client_country"));
+
+           // actual.add(rs.getString("client_gender"));
+
+
+            actual.add(getGender(rs.getString("client_gender")));
+
+            actual.add(getDate(rs.getString("client_birthdate")));
             actual.add(rs.getString("client_phone"));
             actual.add(rs.getString("client_fax"));
             actual.add(rs.getString("client_mobile"));
@@ -122,6 +133,7 @@ public class AddClientDBTest {
         System.out.println("expected="+expected);
 
 
+        Assert.assertEquals(actual,expected,"record does not match");
 
 
     }

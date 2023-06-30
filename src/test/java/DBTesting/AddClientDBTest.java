@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
 import pages.AddClient;
 import pages.Login;
 import pages.Menu;
+import util.DoLogin;
 
 import java.io.IOException;
 import java.sql.*;
@@ -19,18 +20,8 @@ import java.util.ArrayList;
 import static DataProvider.util.GetData.getMyData;
 import static util.Conversion.*;
 
-public class AddClientDBTest {
-    WebDriver driver;
-    @BeforeClass
-    public void doLogin()
-    {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get("http://localhost/ip");
+public class AddClientDBTest  extends DoLogin {
 
-        Login login = new Login(driver);
-        login.doLogin("amolujagare@gmail.com","admin123");
-    }
 
     @Test(dataProvider = "getData")
     public void adddClientTest(

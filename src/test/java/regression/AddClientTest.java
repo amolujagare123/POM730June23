@@ -8,21 +8,11 @@ import org.testng.annotations.Test;
 import pages.AddClient;
 import pages.Login;
 import pages.Menu;
+import util.DoLogin;
 
 import java.text.ParseException;
 
-public class AddClientTest {
-    WebDriver driver;
-    @BeforeClass
-    public void doLogin()
-    {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get("http://localhost/ip");
-
-        Login login = new Login(driver);
-        login.doLogin("amolujagare@gmail.com","admin123");
-    }
+public class AddClientTest extends DoLogin {
 
     @Test
     public void adddClientTest() throws ParseException {

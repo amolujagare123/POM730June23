@@ -189,6 +189,9 @@ public class AddClient {
     }
     @FindBy(xpath="//input[@id='client_web']")
     WebElement webAddress;
+
+    @FindBy(xpath="//input[@id='client_active']")
+    public WebElement active;
     public void setWebAddress(String web) {
        webAddress.sendKeys(web);
     }

@@ -19,6 +19,11 @@ public class Login {
 
     @FindBy(xpath = "//a[normalize-space()='I forgot my password']")
     WebElement forgotPassword;
+
+    @FindBy (xpath="//label[normalize-space()='Email']")
+    public WebElement lblEmail;
+    @FindBy (xpath="//label[normalize-space()='Password']")
+    public WebElement lblPassword;
     public void clickForgotPassword()
     {
         forgotPassword.click();

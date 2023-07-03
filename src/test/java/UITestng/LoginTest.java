@@ -7,8 +7,7 @@ import org.testng.annotations.Test;
 import pages.Login;
 import util.OpenUrl;
 
-import static UITestng.UITestUtil.UITestMethods.enabilityCheck;
-import static UITestng.UITestUtil.UITestMethods.visibilityCheck;
+import static UITestng.UITestUtil.UITestMethods.*;
 
 public class LoginTest extends OpenUrl {
     public static Login login;
@@ -68,5 +67,65 @@ public class LoginTest extends OpenUrl {
         boolean expected = true;
         boolean actual = enabilityCheck(login.btnLogin);
         Assert.assertEquals(actual,expected,"btn login is not enabled");
+    }
+
+    @Test
+    public void lblEmailSpellCheck()
+    {
+        String expected = "Email";
+        String actual = spellCheck(login.lblEmail);
+        Assert.assertEquals(actual,expected,"incorrect spelling");
+
+    }
+    @Test
+    public void lblPasswordSpellCheck()
+    {
+        String expected = "Password";
+        String actual = spellCheck(login.lblPassword);
+        Assert.assertEquals(actual,expected,"incorrect spelling");
+
+    }
+
+    @Test
+    public void watermarkEmailCheck()
+    {
+        String expected = "Email";
+        String actual = getAttributeValue(login.txtUsername, "placeholder");
+        Assert.assertEquals(actual,expected,"incorrect watermark");
+    }
+
+    @Test
+    public void watermarkPasswordCheck()
+    {
+        String expected = "Password";
+        String actual = getAttributeValue(login.txtPassword, "placeholder");
+        Assert.assertEquals(actual,expected,"incorrect watermark");
+    }
+
+    @Test
+    public void lblEmailFontSizeCheck()
+    {
+        String expected = "14px";
+        String actual = getStyleValue(login.lblEmail, "font-size");
+        System.out.println("expected="+expected+" | actual="+actual);
+        Assert.assertEquals(actual,expected,"incorrect font size");
+    }
+
+    @Test
+    public void lblEmailFontFamilyCheck()
+    {
+        String expected = "-apple-system, system-ui, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif";
+        String actual = getStyleValue(login.lblEmail, "font-family");
+        System.out.println("expected="+expected+" | actual="+actual);
+        Assert.assertEquals(actual,expected,"incorrect font size");
+    }
+
+    @Test
+    public void btnLoginColorCheck()
+    {
+        String expected = "#2C8EDD";
+        String actual = getHexCodeColor(login.btnLogin, "background-color");
+        System.out.println("expected="+expected+" | actual="+actual);
+        Assert.assertEquals(actual,expected,"incorrect color");
     }
 }
